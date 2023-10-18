@@ -1,14 +1,25 @@
-// to store movies data
-let movies = [];
-
-let currentPage = 1;
-let API_KEY = 'f531333d637d0c44abc85b3e74db2186';
-
+const API_KEY = 'f531333d637d0c44abc85b3e74db2186';
 const movieList = document.getElementById('movies-list');
+const sortByDateButton = document.getElementById('sort-by-date');
+const sortByRatingButton = document.getElementById('sort-by-rating');
+const pagination = document.querySelector("div.pagination");
+const prevButton = document.querySelector("button#prev-button");
+const pageNumberButton = document.querySelector("button#prev-number-button");
+const nextButton = document.querySelector("button#next-button");
+const searchButton = document.getElementById("search-button");
+const searchInput = document.getElementById("search-input");
+const allTab = document.getElementById("all-tab");
+const favouritesTab = document.getElementById("favourites-tab");
+const sortBottons = document.querySelector(".sorting-options");
+let movies = [];
+let currentPage = 1;
+let firstSortedByDateClicked = true;
+let firstSortedByRatingClicked = true;
 // step 1 = fetch the movies
 async function fetchMovies(page){
     try{
         const response = await fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=${page}`);
+        // const response = await fetch(GET_MOVIES_API);
         const result = await response.json();
         movies = result.results;
         // console.log(result.results)
@@ -17,7 +28,7 @@ async function fetchMovies(page){
         console.log(error);
     }
 }
-fetchMovies(currentPage)
+// fetchMovies(currentPage)
 
 function getMovieNamesFromLocalStorage(){
     const favouriteMovies = JSON.parse(localStorage.getItem("favouriteMovies"));
@@ -93,10 +104,10 @@ const renderMovies = (movies) =>{
 }
 
 // sort functions for sortbydate
-const sortByDateButton = document.getElementById('sort-by-date');
-sortByDateButton.addEventListener("click",sortByDate);
+// const sortByDateButton = document.getElementById('sort-by-date');
+// sortByDateButton.addEventListener("click",sortByDate);
 
-let firstSortedByDateClicked = true;
+// let firstSortedByDateClicked = true;
 function sortByDate(){
     // alert('clicked')
     let sortedMovies;
@@ -124,10 +135,10 @@ function sortByDate(){
 }
 
 // sort functions for sortbyrating
-const sortByRatingButton = document.getElementById('sort-by-rating');
-sortByRatingButton.addEventListener("click",sortByRating);
+// const sortByRatingButton = document.getElementById('sort-by-rating');
+// sortByRatingButton.addEventListener("click",sortByRating);
 
-let firstSortedByRatingClicked = true;
+// let firstSortedByRatingClicked = true;
 function sortByRating(){
     // alert('clicked');
     let sortedMovies;
@@ -153,13 +164,13 @@ function sortByRating(){
 
 // We are assuming that we only have 4pages of data
 // pagination element
-const pagination = document.querySelector("div.pagination");
-const prevButton = document.querySelector("button#prev-button");
-const pageNumberButton = document.querySelector("button#prev-number-button");
-const nextButton = document.querySelector("button#next-button");
+// const pagination = document.querySelector("div.pagination");
+// const prevButton = document.querySelector("button#prev-button");
+// const pageNumberButton = document.querySelector("button#prev-number-button");
+// const nextButton = document.querySelector("button#next-button");
 
 // logic for previous button 
-prevButton.addEventListener("click",prevPage)
+// prevButton.addEventListener("click",prevPage)
 
 function prevPage(){
     // alert("clicked")
@@ -226,8 +237,8 @@ const searchMovies = async (searchedMovies) => {
 }
 
 // search element
-const searchButton = document.getElementById("search-button");
-const searchInput = document.getElementById("search-input");
+// const searchButton = document.getElementById("search-button");
+// const searchInput = document.getElementById("search-input");
 
 searchButton.addEventListener("click", () =>{
     // alert("clicked");
@@ -236,9 +247,9 @@ searchButton.addEventListener("click", () =>{
 })
 
 // all tab and favourites tab section
-const allTab = document.getElementById("all-tab");
-const favouritesTab = document.getElementById("favourites-tab");
-const sortBottons = document.querySelector(".sorting-options");
+// const allTab = document.getElementById("all-tab");
+// const favouritesTab = document.getElementById("favourites-tab");
+// const sortBottons = document.querySelector(".sorting-options");
 
 const getMovieByName = async (movieName) => {
     try{
@@ -326,3 +337,9 @@ function switchTab(event){
 
 allTab.addEventListener("click",switchTab);
 favouritesTab.addEventListener("click",switchTab);
+prevButton.addEventListener("click",prevPage);
+sortByRatingButton.addEventListener("click",sortByRating);
+sortByDateButton.addEventListener("click",sortByDate);
+
+fetchMovies(currentPage)
+
